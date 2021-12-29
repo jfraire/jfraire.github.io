@@ -35,7 +35,7 @@ You can see the listing of the program below. It has more comments than code bec
 
 In terms of the circuit, the micro-controller doesn’t require much. The circuit has just a voltage regulator, and terminals for the potentiometers, servo-motor, and LEDs. Only one pin is used for the LEDs. I should have put a transistor instead.
 
-I put everything in a repository, in GitHub. Even the Gerber files.
+I put everything in a `repository <https://github.com/jfraire/phenakistiscope>`_, in GitHub. It includes the KiCAD files and the code for the micro-controller.
 
 .. image:: /images/open_phenakistiscope.jpg
     :height: 444px
