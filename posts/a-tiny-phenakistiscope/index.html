@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html prefix="        og: http://ogp.me/ns# article: http://ogp.me/ns/article#     " vocab="http://ogp.me/ns" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="A phenakistiscope circuit!">
+<meta name="viewport" content="width=device-width">
+<title>A tiny phenakistiscope | La séptima vida</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../../rss.xml">
+<link rel="canonical" href="https://jfraire.github.io/posts/a-tiny-phenakistiscope/">
+<!--[if lt IE 9]><script src="../../assets/js/html5shiv-printshiv.min.js"></script><![endif]--><link href="../../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../../assets/css/style.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+<meta name="author" content="Julio Fraire">
+<link rel="prev" href="../playing-with-spirals/" title="Playing with spirals" type="text/html">
+<meta property="og:site_name" content="La séptima vida">
+<meta property="og:title" content="A tiny phenakistiscope">
+<meta property="og:url" content="https://jfraire.github.io/posts/a-tiny-phenakistiscope/">
+<meta property="og:description" content="A phenakistiscope circuit!">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2021-12-28T00:15:01+01:00">
+<meta property="article:tag" content="phenakistiscope">
+</head>
+<body>
+
+<section class="section"><div class="container">
+    <nav class="nav"><div class="nav-left">
+        <a class="nav-item" href="https://jfraire.github.io/"><h1 class="title is-4">La séptima vida</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" href="../../archive.html">
+            <span class="icon">
+              <i class="fa fa-archive"></i>
+            </span>
+          </a>
+          <a class="level-item" href="../../categories/">
+            <span class="icon">
+              <i class="fa fa-tags"></i>
+            </span>
+          </a>
+          <a class="level-item" href="../../rss.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+          </a>
+          <a class="level-item" href="https://twitter.com/juliofraire">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          <a class="level-item" href="https://github.com/jfraire">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+        </nav>
+</div>
+    </nav>
+</div>
+</section><section class="section"><div class="container" id="content">
+    
+
+    <h2 class="subtitle is-6">2021-12-28 00:15</h2>
+    <h1 class="title">A tiny phenakistiscope</h1>
+    <div class="content">
+    <div>
+<p>The phenakistiscope is a rotating disk that produces short animations. It was invented in the 19th century, and the disks from that time are really beautiful. The animations they create are intriguing. In this <a class="reference external" href="../phenakistiscope">series</a> we look at a few of the ideas that result in these captivating works of art.</p>
+<section id="a-different-kind-of-charm"><h2>A different kind of charm</h2>
+<p>I know. The XIX century animations are charming. Seeing the rotating disks through their slits, in front of a mirror, would transport you to another world, another ambiance of high hats, beautiful dresses, spectacles… a refined atmosphere. And I am about to break all this by talking about servo-motors, LEDs and micro-controllers.</p>
+<p>But bear with me. We are talking about a little ATtiny85 micro-controller. Only 8 terminals in a sweet thru-hole package. This tiny fellow can use a continuous-rotation servo-motor, some potentiometers, and a bunch of LEDs to replace the slits and the mirror. And the best part, it will let you see the animations at the same time as your kids.</p>
+<p>The idea is simple: The servo-motor spins the disk while the LEDs blink. The disk will advance a certain angle between two LED flashes. If this angle coincides with the design of the disk, the animation will come to life!</p>
+<p>And this is where the two potentiometers come in: One of them will let you change the speed of the servo-motor. The other potentiometer will change the time between the flashes of the LEDs.</p>
+<img alt="The phenakistiscope assembled in a tea can" src="../../images/phenakistiscope.jpg" style="width: 350px; height: 284px;"></section><section id="a-brief-description-of-the-program-and-the-circuit"><h2>A brief description of the program and the circuit</h2>
+<p>The ATtiny85 is a nice piece of micro-controller. The program configures a timer to produce the PWM signal  for the servo-motor, another timer for the LEDs, and the ADC to read the two potentiometers. Then, it uses the readings of the potentiometers to change the limits of the timers. And that’s it!</p>
+<p>You can see the listing of the program below. It has more comments than code because the actual code is… cryptic. You should check the <a class="reference external" href="https://www.microchip.com/en-us/product/ATtiny85">datasheet</a> to make sense of it. It is almost pure configuration. The only logic is there to copy the potentiometer readings to the timers.</p>
+<p><a class="reference external" href="../../listings/phenakistiscope_attiny.c.html">phenakistiscope_attiny.c</a>  <a class="reference external" href="../../listings/phenakistiscope_attiny.c">(Source)</a></p>
+<pre class="code c"><a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-1" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-1"></a><span class="cm">/* -----------------------------------------------</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-2" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-2"></a><span class="cm">   Program that controls the period of a PWM</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-3" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-3"></a><span class="cm">   signal with a potentiometer, while it moves a</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-4" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-4"></a><span class="cm">   servo motor at a constant speed.</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-5" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-5"></a><span class="cm">   It uses timer 0, 1, and the ADC</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-6" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-6"></a><span class="cm">   Works with ATTiny85</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-7" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-7"></a><span class="cm">   ----------------------------------------------- */</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-8" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-8"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;avr/io.h&gt;</span><span class="cp"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-9" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-9"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;avr/interrupt.h&gt;</span><span class="cp"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-10" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-10"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;util/delay.h&gt;</span><span class="cp"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-11" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-11"></a>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-12" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-12"></a><span class="cp">#define LED PB1</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-13" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-13"></a><span class="cp">#define SERVO PB4</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-14" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-14"></a><span class="cp">#define POT1 ADC1</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-15" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-15"></a><span class="cp">#define POT2 ADC3</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-16" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-16"></a>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-17" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-17"></a><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">bright_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-18" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-18"></a>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-19" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-19"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="nf">read_adc</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">channel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-20" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-20"></a><span class="w">    </span><span class="n">ADMUX</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="p">(</span><span class="mh">0xF0</span><span class="p">);</span><span class="w">                        </span><span class="c1">// Clear the channel selection</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-21" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-21"></a><span class="w">    </span><span class="n">ADMUX</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="n">channel</span><span class="p">;</span><span class="w">                       </span><span class="c1">// Read from ADCX</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-22" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-22"></a><span class="w">    </span><span class="n">ADCSRA</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADSC</span><span class="p">);</span><span class="w">                  </span><span class="c1">// Start conversion</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-23" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-23"></a><span class="w">    </span><span class="n">loop_until_bit_is_clear</span><span class="p">(</span><span class="n">ADCSRA</span><span class="p">,</span><span class="w"> </span><span class="n">ADSC</span><span class="p">);</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-24" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-24"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ADCH</span><span class="p">;</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-25" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-25"></a><span class="p">}</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-26" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-26"></a>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-27" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-27"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-28" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-28"></a><span class="w">    </span><span class="c1">// Set LED and SERVO pins for output</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-29" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-29"></a><span class="w">    </span><span class="n">DDRB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">SERVO</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">LED</span><span class="p">);</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-30" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-30"></a>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-31" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-31"></a><span class="w">    </span><span class="c1">// Initialize the ADC -- Use VCC as reference</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-32" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-32"></a><span class="w">    </span><span class="n">ADMUX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">                              </span><span class="c1">// Clear REFS0-2 select VCC as ref</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-33" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-33"></a><span class="w">    </span><span class="n">ADMUX</span><span class="w">  </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADLAR</span><span class="p">);</span><span class="w">                 </span><span class="c1">// Use the most significant 8 bits</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-34" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-34"></a><span class="w">    </span><span class="n">ADCSRA</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADPS1</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADPS0</span><span class="p">);</span><span class="w">  </span><span class="c1">// Set prescaler to 1/8</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-35" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-35"></a><span class="w">    </span><span class="n">ADCSRA</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADEN</span><span class="p">);</span><span class="w">                  </span><span class="c1">// Enable ADC</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-36" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-36"></a>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-37" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-37"></a><span class="w">    </span><span class="c1">// This is the timer for the LEDs</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-38" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-38"></a><span class="w">    </span><span class="c1">// Configure timer 0 in fast PWM mode with variable period</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-39" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-39"></a><span class="w">    </span><span class="c1">// The period is modified by chaning OCR0A, and the signal</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-40" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-40"></a><span class="w">    </span><span class="c1">// turns off on OCR0B</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-41" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-41"></a><span class="w">    </span><span class="c1">// So, output is at OC0B, PB1</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-42" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-42"></a><span class="w">    </span><span class="n">TCCR0A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">WGM01</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">WGM00</span><span class="p">);</span><span class="w"> </span><span class="c1">// Fast PWM mode reseting at OCR0A</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-43" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-43"></a><span class="w">    </span><span class="n">TCCR0B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">WGM02</span><span class="p">);</span><span class="w">                </span><span class="c1">// (mode 7)</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-44" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-44"></a><span class="w">    </span><span class="n">TCCR0A</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">COM0B1</span><span class="p">);</span><span class="w">              </span><span class="c1">// Non-inverting output on OC0B (PB1)</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-45" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-45"></a><span class="w">    </span><span class="n">TCCR0B</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS02</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS00</span><span class="p">);</span><span class="w">  </span><span class="c1">// Set the prescaler to 1/1024</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-46" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-46"></a><span class="w">    </span><span class="n">OCR0B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bright_time</span><span class="p">;</span><span class="w">                  </span><span class="c1">// Time to keep the output high</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-47" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-47"></a>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-48" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-48"></a><span class="w">    </span><span class="c1">// And this is for the servo motor</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-49" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-49"></a><span class="w">    </span><span class="c1">// Configure timer 1 in PWM mode. Output is PB4 (OC1B)</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-50" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-50"></a><span class="w">    </span><span class="c1">// The ON period should last between 900 and 2100 us --&gt; 1200 us</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-51" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-51"></a><span class="w">    </span><span class="c1">// And the frequency of the signal should be between 50 and 100 Hz</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-52" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-52"></a><span class="w">    </span><span class="c1">// Because it is an 8-bit timer, its period is divided by 256, maximum</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-53" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-53"></a><span class="w">    </span><span class="c1">// A prescaler of 64 will give a period of 16.4 ms with a resolution of</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-54" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-54"></a><span class="w">    </span><span class="c1">// 64 us</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-55" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-55"></a><span class="w">    </span><span class="c1">// The 1200 us can be divided into only 18.75 bins...</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-56" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-56"></a><span class="w">    </span><span class="n">GTCCR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">PWM1B</span><span class="p">);</span><span class="w">        </span><span class="c1">// Enable PWM mode on OCR1A</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-57" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-57"></a><span class="w">    </span><span class="n">GTCCR</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">COM1B1</span><span class="p">);</span><span class="w">      </span><span class="c1">// OC1A turns on at 0, resets at OCR1C</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-58" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-58"></a><span class="w">    </span><span class="n">TCCR1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS12</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS11</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS10</span><span class="p">);</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-59" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-59"></a><span class="w">    </span><span class="n">OCR1C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xFF</span><span class="p">;</span><span class="w">                </span><span class="c1">// Pulse duration of 256 * 64 us, or 16.38 ms</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-60" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-60"></a>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-61" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-61"></a><span class="w">    </span><span class="c1">// ------ Event loop ------ //</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-62" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-62"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-63" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-63"></a><span class="w">        </span><span class="c1">// Read the 1st potentiometer and change the period of the PWM</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-64" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-64"></a><span class="w">        </span><span class="c1">// signal for the LED in timer 0</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-65" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-65"></a><span class="w">        </span><span class="n">OCR0A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_adc</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-66" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-66"></a>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-67" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-67"></a><span class="w">        </span><span class="c1">// Read the 2nd potentiometer and change the high duration of the PWM</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-68" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-68"></a><span class="w">        </span><span class="c1">// signal for the servo motor in timer 1</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-69" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-69"></a><span class="w">        </span><span class="c1">// The 0-255 signal should be mapped to 0-18.75</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-70" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-70"></a><span class="w">        </span><span class="c1">// The minimum pulse is 900 us, or 14 clock ticks of 64 us</span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-71" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-71"></a><span class="w">        </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">speed_servo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_adc</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-72" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-72"></a><span class="w">        </span><span class="n">OCR1B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">)(</span><span class="mf">18.75</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">speed_servo</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">255.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">14.06</span><span class="p">);</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-73" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-73"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-74" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-74"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<a id="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-75" name="rest_code_e8bd2d7e6f6f4c4580a75f753cf3c280-75"></a><span class="p">}</span><span class="w"></span>
+</pre>
+<p>In terms of the circuit, the micro-controller doesn’t require much. The circuit has just a voltage regulator, and terminals for the potentiometers, servo-motor, and LEDs. Only one pin is used for the LEDs. I should have put a transistor instead.</p>
+<p>I put everything in a repository, in GitHub. Even the Gerber files.</p>
+<img alt="The phenakistiscope circuit assembled in a tea can" src="../../images/open_phenakistiscope.jpg" style="width: 250px; height: 444px;"></section><section id="my-own-animated-disk"><h2>My own animated disk!</h2>
+<p>And this is my first animated disk. The pleasure to see it animated is unbelievable. It lacks the charm of the XIX century but has a reminiscence of aliens and cows.</p>
+<img alt="An animated disk of aliens abducting cows" src="../../images/cow_abduction.gif" style="width: 400px; height: 395px;"><p>And here it is, the real thing:</p>
+<div class="youtube-video">
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Ikgw9VhqUUA?rel=0&amp;wmode=transparent" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+</div></section><section id="about-this-series"><h2>About this series</h2>
+<p>This is the fifth and last article about the phenakistiscope. In this short series, I describe some of the ideas used to animate the disks. The first article is <a class="reference external" href="../phenakistiscope">here</a>.</p>
+</section>
+</div>
+    </div>
+    </div>
+</section><section class="section"><div class="container has-text-centered">
+            <p>Contents © 2021         <a href="mailto:julio.fraire@gmail.com">Julio Fraire</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+  </div>
+</section><script src="../../assets/js/all-nocdn.js"></script><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
+</body>
+</html>

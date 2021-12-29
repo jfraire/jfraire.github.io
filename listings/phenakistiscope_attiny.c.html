@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html prefix="        og: http://ogp.me/ns# article: http://ogp.me/ns/article#     " vocab="http://ogp.me/ns" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="phenakistiscope_attiny.c">
+<meta name="viewport" content="width=device-width">
+<title>phenakistiscope_attiny.c | La séptima vida</title>
+<link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../rss.xml">
+<link rel="canonical" href="https://jfraire.github.io/listings/phenakistiscope_attiny.c.html">
+<!--[if lt IE 9]><script src="../assets/js/html5shiv-printshiv.min.js"></script><![endif]--><link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+</head>
+<body>
+
+<section class="section"><div class="container">
+    <nav class="nav"><div class="nav-left">
+        <a class="nav-item" href="https://jfraire.github.io/"><h1 class="title is-4">La séptima vida</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" href="../archive.html">
+            <span class="icon">
+              <i class="fa fa-archive"></i>
+            </span>
+          </a>
+          <a class="level-item" href="../categories/">
+            <span class="icon">
+              <i class="fa fa-tags"></i>
+            </span>
+          </a>
+          <a class="level-item" href="../rss.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+          </a>
+          <a class="level-item" href="https://twitter.com/juliofraire">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          <a class="level-item" href="https://github.com/jfraire">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+        </nav>
+</div>
+    </nav>
+</div>
+</section><section class="section"><div class="container" id="content">
+    
+
+<nav class="breadcrumbs"><ul class="breadcrumb">
+<li><a href=".">listings</a></li>
+                <li>phenakistiscope_attiny.c</li>
+</ul></nav><h1>phenakistiscope_attiny.c
+            <small><a href="phenakistiscope_attiny.c">(Source)</a></small>
+        </h1>
+    <div class="code"><table class="codetable">
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-1"><code data-line-number=" 1"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-1" name="listingsphenakistiscope_attinyc-1"></a><span class="cm">/* -----------------------------------------------</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-2"><code data-line-number=" 2"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-2" name="listingsphenakistiscope_attinyc-2"></a><span class="cm">   Program that controls the period of a PWM</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-3"><code data-line-number=" 3"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-3" name="listingsphenakistiscope_attinyc-3"></a><span class="cm">   signal with a potentiometer, while it moves a</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-4"><code data-line-number=" 4"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-4" name="listingsphenakistiscope_attinyc-4"></a><span class="cm">   servo motor at a constant speed.</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-5"><code data-line-number=" 5"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-5" name="listingsphenakistiscope_attinyc-5"></a><span class="cm">   It uses timer 0, 1, and the ADC</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-6"><code data-line-number=" 6"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-6" name="listingsphenakistiscope_attinyc-6"></a><span class="cm">   Works with ATTiny85</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-7"><code data-line-number=" 7"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-7" name="listingsphenakistiscope_attinyc-7"></a><span class="cm">   ----------------------------------------------- */</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-8"><code data-line-number=" 8"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-8" name="listingsphenakistiscope_attinyc-8"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;avr/io.h&gt;</span><span class="cp"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-9"><code data-line-number=" 9"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-9" name="listingsphenakistiscope_attinyc-9"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;avr/interrupt.h&gt;</span><span class="cp"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-10"><code data-line-number="10"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-10" name="listingsphenakistiscope_attinyc-10"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;util/delay.h&gt;</span><span class="cp"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-11"><code data-line-number="11"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-11" name="listingsphenakistiscope_attinyc-11"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-12"><code data-line-number="12"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-12" name="listingsphenakistiscope_attinyc-12"></a><span class="cp">#define LED PB1</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-13"><code data-line-number="13"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-13" name="listingsphenakistiscope_attinyc-13"></a><span class="cp">#define SERVO PB4</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-14"><code data-line-number="14"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-14" name="listingsphenakistiscope_attinyc-14"></a><span class="cp">#define POT1 ADC1</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-15"><code data-line-number="15"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-15" name="listingsphenakistiscope_attinyc-15"></a><span class="cp">#define POT2 ADC3</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-16"><code data-line-number="16"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-16" name="listingsphenakistiscope_attinyc-16"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-17"><code data-line-number="17"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-17" name="listingsphenakistiscope_attinyc-17"></a><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">bright_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-18"><code data-line-number="18"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-18" name="listingsphenakistiscope_attinyc-18"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-19"><code data-line-number="19"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-19" name="listingsphenakistiscope_attinyc-19"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="nf">read_adc</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">channel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-20"><code data-line-number="20"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-20" name="listingsphenakistiscope_attinyc-20"></a><span class="w">    </span><span class="n">ADMUX</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="p">(</span><span class="mh">0xF0</span><span class="p">);</span><span class="w">                        </span><span class="c1">// Clear the channel selection</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-21"><code data-line-number="21"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-21" name="listingsphenakistiscope_attinyc-21"></a><span class="w">    </span><span class="n">ADMUX</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="n">channel</span><span class="p">;</span><span class="w">                       </span><span class="c1">// Read from ADCX</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-22"><code data-line-number="22"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-22" name="listingsphenakistiscope_attinyc-22"></a><span class="w">    </span><span class="n">ADCSRA</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADSC</span><span class="p">);</span><span class="w">                  </span><span class="c1">// Start conversion</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-23"><code data-line-number="23"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-23" name="listingsphenakistiscope_attinyc-23"></a><span class="w">    </span><span class="n">loop_until_bit_is_clear</span><span class="p">(</span><span class="n">ADCSRA</span><span class="p">,</span><span class="w"> </span><span class="n">ADSC</span><span class="p">);</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-24"><code data-line-number="24"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-24" name="listingsphenakistiscope_attinyc-24"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ADCH</span><span class="p">;</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-25"><code data-line-number="25"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-25" name="listingsphenakistiscope_attinyc-25"></a><span class="p">}</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-26"><code data-line-number="26"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-26" name="listingsphenakistiscope_attinyc-26"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-27"><code data-line-number="27"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-27" name="listingsphenakistiscope_attinyc-27"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-28"><code data-line-number="28"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-28" name="listingsphenakistiscope_attinyc-28"></a><span class="w">    </span><span class="c1">// Set LED and SERVO pins for output</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-29"><code data-line-number="29"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-29" name="listingsphenakistiscope_attinyc-29"></a><span class="w">    </span><span class="n">DDRB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">SERVO</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">LED</span><span class="p">);</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-30"><code data-line-number="30"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-30" name="listingsphenakistiscope_attinyc-30"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-31"><code data-line-number="31"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-31" name="listingsphenakistiscope_attinyc-31"></a><span class="w">    </span><span class="c1">// Initialize the ADC -- Use VCC as reference</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-32"><code data-line-number="32"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-32" name="listingsphenakistiscope_attinyc-32"></a><span class="w">    </span><span class="n">ADMUX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">                              </span><span class="c1">// Clear REFS0-2 select VCC as ref</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-33"><code data-line-number="33"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-33" name="listingsphenakistiscope_attinyc-33"></a><span class="w">    </span><span class="n">ADMUX</span><span class="w">  </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADLAR</span><span class="p">);</span><span class="w">                 </span><span class="c1">// Use the most significant 8 bits</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-34"><code data-line-number="34"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-34" name="listingsphenakistiscope_attinyc-34"></a><span class="w">    </span><span class="n">ADCSRA</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADPS1</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADPS0</span><span class="p">);</span><span class="w">  </span><span class="c1">// Set prescaler to 1/8 </span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-35"><code data-line-number="35"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-35" name="listingsphenakistiscope_attinyc-35"></a><span class="w">    </span><span class="n">ADCSRA</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADEN</span><span class="p">);</span><span class="w">                  </span><span class="c1">// Enable ADC</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-36"><code data-line-number="36"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-36" name="listingsphenakistiscope_attinyc-36"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-37"><code data-line-number="37"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-37" name="listingsphenakistiscope_attinyc-37"></a><span class="w">    </span><span class="c1">// This is the timer for the LEDs</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-38"><code data-line-number="38"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-38" name="listingsphenakistiscope_attinyc-38"></a><span class="w">    </span><span class="c1">// Configure timer 0 in fast PWM mode with variable period</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-39"><code data-line-number="39"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-39" name="listingsphenakistiscope_attinyc-39"></a><span class="w">    </span><span class="c1">// The period is modified by chaning OCR0A, and the signal </span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-40"><code data-line-number="40"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-40" name="listingsphenakistiscope_attinyc-40"></a><span class="w">    </span><span class="c1">// turns off on OCR0B</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-41"><code data-line-number="41"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-41" name="listingsphenakistiscope_attinyc-41"></a><span class="w">    </span><span class="c1">// So, output is at OC0B, PB1</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-42"><code data-line-number="42"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-42" name="listingsphenakistiscope_attinyc-42"></a><span class="w">    </span><span class="n">TCCR0A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">WGM01</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">WGM00</span><span class="p">);</span><span class="w"> </span><span class="c1">// Fast PWM mode reseting at OCR0A</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-43"><code data-line-number="43"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-43" name="listingsphenakistiscope_attinyc-43"></a><span class="w">    </span><span class="n">TCCR0B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">WGM02</span><span class="p">);</span><span class="w">                </span><span class="c1">// (mode 7)</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-44"><code data-line-number="44"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-44" name="listingsphenakistiscope_attinyc-44"></a><span class="w">    </span><span class="n">TCCR0A</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">COM0B1</span><span class="p">);</span><span class="w">              </span><span class="c1">// Non-inverting output on OC0B (PB1)</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-45"><code data-line-number="45"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-45" name="listingsphenakistiscope_attinyc-45"></a><span class="w">    </span><span class="n">TCCR0B</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS02</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS00</span><span class="p">);</span><span class="w">  </span><span class="c1">// Set the prescaler to 1/1024</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-46"><code data-line-number="46"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-46" name="listingsphenakistiscope_attinyc-46"></a><span class="w">    </span><span class="n">OCR0B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bright_time</span><span class="p">;</span><span class="w">                  </span><span class="c1">// Time to keep the output high</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-47"><code data-line-number="47"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-47" name="listingsphenakistiscope_attinyc-47"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-48"><code data-line-number="48"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-48" name="listingsphenakistiscope_attinyc-48"></a><span class="w">    </span><span class="c1">// And this is for the servo motor</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-49"><code data-line-number="49"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-49" name="listingsphenakistiscope_attinyc-49"></a><span class="w">    </span><span class="c1">// Configure timer 1 in PWM mode. Output is PB4 (OC1B)</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-50"><code data-line-number="50"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-50" name="listingsphenakistiscope_attinyc-50"></a><span class="w">    </span><span class="c1">// The ON period should last between 900 and 2100 us --&gt; 1200 us</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-51"><code data-line-number="51"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-51" name="listingsphenakistiscope_attinyc-51"></a><span class="w">    </span><span class="c1">// And the frequency of the signal should be between 50 and 100 Hz</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-52"><code data-line-number="52"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-52" name="listingsphenakistiscope_attinyc-52"></a><span class="w">    </span><span class="c1">// Because it is an 8-bit timer, its period is divided by 256, maximum</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-53"><code data-line-number="53"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-53" name="listingsphenakistiscope_attinyc-53"></a><span class="w">    </span><span class="c1">// A prescaler of 64 will give a period of 16.4 ms with a resolution of </span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-54"><code data-line-number="54"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-54" name="listingsphenakistiscope_attinyc-54"></a><span class="w">    </span><span class="c1">// 64 us</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-55"><code data-line-number="55"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-55" name="listingsphenakistiscope_attinyc-55"></a><span class="w">    </span><span class="c1">// The 1200 us can be divided into only 18.75 bins...</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-56"><code data-line-number="56"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-56" name="listingsphenakistiscope_attinyc-56"></a><span class="w">    </span><span class="n">GTCCR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">PWM1B</span><span class="p">);</span><span class="w">        </span><span class="c1">// Enable PWM mode on OCR1A</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-57"><code data-line-number="57"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-57" name="listingsphenakistiscope_attinyc-57"></a><span class="w">    </span><span class="n">GTCCR</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">COM1B1</span><span class="p">);</span><span class="w">      </span><span class="c1">// OC1A turns on at 0, resets at OCR1C</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-58"><code data-line-number="58"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-58" name="listingsphenakistiscope_attinyc-58"></a><span class="w">    </span><span class="n">TCCR1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS12</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS11</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS10</span><span class="p">);</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-59"><code data-line-number="59"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-59" name="listingsphenakistiscope_attinyc-59"></a><span class="w">    </span><span class="n">OCR1C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xFF</span><span class="p">;</span><span class="w">                </span><span class="c1">// Pulse duration of 256 * 64 us, or 16.38 ms</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-60"><code data-line-number="60"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-60" name="listingsphenakistiscope_attinyc-60"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-61"><code data-line-number="61"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-61" name="listingsphenakistiscope_attinyc-61"></a><span class="w">    </span><span class="c1">// ------ Event loop ------ //</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-62"><code data-line-number="62"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-62" name="listingsphenakistiscope_attinyc-62"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-63"><code data-line-number="63"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-63" name="listingsphenakistiscope_attinyc-63"></a><span class="w">        </span><span class="c1">// Read the 1st potentiometer and change the period of the PWM</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-64"><code data-line-number="64"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-64" name="listingsphenakistiscope_attinyc-64"></a><span class="w">        </span><span class="c1">// signal for the LED in timer 0</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-65"><code data-line-number="65"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-65" name="listingsphenakistiscope_attinyc-65"></a><span class="w">        </span><span class="n">OCR0A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_adc</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-66"><code data-line-number="66"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-66" name="listingsphenakistiscope_attinyc-66"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-67"><code data-line-number="67"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-67" name="listingsphenakistiscope_attinyc-67"></a><span class="w">        </span><span class="c1">// Read the 2nd potentiometer and change the high duration of the PWM</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-68"><code data-line-number="68"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-68" name="listingsphenakistiscope_attinyc-68"></a><span class="w">        </span><span class="c1">// signal for the servo motor in timer 1</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-69"><code data-line-number="69"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-69" name="listingsphenakistiscope_attinyc-69"></a><span class="w">        </span><span class="c1">// The 0-255 signal should be mapped to 0-18.75</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-70"><code data-line-number="70"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-70" name="listingsphenakistiscope_attinyc-70"></a><span class="w">        </span><span class="c1">// The minimum pulse is 900 us, or 14 clock ticks of 64 us</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-71"><code data-line-number="71"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-71" name="listingsphenakistiscope_attinyc-71"></a><span class="w">        </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">speed_servo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_adc</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-72"><code data-line-number="72"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-72" name="listingsphenakistiscope_attinyc-72"></a><span class="w">        </span><span class="n">OCR1B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">)(</span><span class="mf">18.75</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">speed_servo</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">255.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">14.06</span><span class="p">);</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-73"><code data-line-number="73"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-73" name="listingsphenakistiscope_attinyc-73"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-74"><code data-line-number="74"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-74" name="listingsphenakistiscope_attinyc-74"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-75"><code data-line-number="75"></code></a></td>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-75" name="listingsphenakistiscope_attinyc-75"></a><span class="p">}</span><span class="w"></span>
+</code></td>
+</tr>
+</table></div>
+
+  </div>
+</section><section class="section"><div class="container has-text-centered">
+            <p>Contents © 2021         <a href="mailto:julio.fraire@gmail.com">Julio Fraire</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+  </div>
+</section><script src="../assets/js/all-nocdn.js"></script><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
+</body>
+</html>

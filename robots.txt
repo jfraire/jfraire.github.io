@@ -1,0 +1,4 @@
+Sitemap: https://jfraire.github.io/sitemapindex.xml
+
+User-Agent: *
+Host: jfraire.github.io
