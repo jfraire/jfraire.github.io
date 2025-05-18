@@ -15,6 +15,8 @@ It is easy nowadays to find beautiful disks for this kind of wonderful animation
 
 But let's not run ahead ourselves, and let's talk about the disks first.
 
+.. TEASER_END
+
 Beautiful disks (and how they work)
 -----------------------------------
 
@@ -46,6 +48,6 @@ Using a number of frames that is different than the angle of rotation of the dis
 About this series
 -----------------
 
-This is the first article about the phenakistiscope. In this short series, I describe some of the ideas used to animate the disks. At the end I will include a post about a circuit that animates the disks using LEDs and a servomotor.
+This is the first article about the `phenakistiscope </categories/phenakistiscope>`_. In this short series, I describe some of the ideas used to animate the disks. At the end I will include a post about a circuit that animates the disks using LEDs and a servomotor.
 
 The image used above can be found in `the library of congress of the United States <http://loc.gov/pictures/resource/ppmsca.05947/>`_ and it is in the public domain.

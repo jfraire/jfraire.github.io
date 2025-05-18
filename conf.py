@@ -25,7 +25,7 @@ SITE_URL = "https://jfraire.github.io/"
 # If not set, defaults to SITE_URL
 # BASE_URL = "https://jfraire.github.io/"
 BLOG_EMAIL = "julio.fraire@gmail.com"
-BLOG_DESCRIPTION = "del gato que perdió la cuenta"  # (translatable)
+BLOG_DESCRIPTION = "Una vida más de un gato que perdió la cuenta"  # (translatable)
 
 # Nikola is multilingual!
 #
@@ -143,7 +143,7 @@ NAVIGATION_LINKS = {
         ("/archive.html", "fa fa-archive"),
         ("/categories/", "fa fa-tags"),
         ("/rss.xml", "fa fa-rss"),
-        ("https://twitter.com/juliofraire", "fa fa-twitter"),
+        ("https://bsky.app/profile/verdeyazul.bsky.social", "fa fa-twitter"),
         ("https://github.com/jfraire", "fa fa-github"),
     ),
 }
@@ -935,7 +935,7 @@ IMAGE_FOLDERS = {'images': 'images'}
 # )
 
 # Show teasers (instead of full posts) in indexes? Defaults to False.
-# INDEX_TEASERS = False
+INDEX_TEASERS = True
 
 # HTML fragments with the Read more... links.
 # The following tags exist and are replaced for you:
