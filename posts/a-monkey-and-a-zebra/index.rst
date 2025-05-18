@@ -1,5 +1,5 @@
 ﻿.. title: A balancing monkey and a jumping zebra
-.. slug: a-balancing-monkey-and-a-jumping-zebra
+.. slug: a-monkey-and-a-zebra
 .. date: 2021-12-16 23:41:47 UTC+01:00
 .. tags: phenakistiscope
 .. category: electronics
@@ -7,7 +7,10 @@
 .. description: Up and down movements in the phenakistiscope
 .. type: text
 
-The phenakistiscope is a rotating disk that produces short animations. It was invented in the 19th century, and the disks from that time are really beautiful. The animations they create are intriguing. In this `series </posts/phenakistiscope>`_ we look at a few of the ideas that result in these captivating works of art.
+This is the third article about the `phenakistiscope </categories/phenakistiscope>`_, an amusing, early animation toy. It builds cyclic animations of a few frames and yet, it allows for
+the creation of interesting movements. In this post, I invite you to read about monkeys swinging around branches and zebras jumping through trees.
+
+.. TEASER_END
 
 A disk with many elements
 -------------------------

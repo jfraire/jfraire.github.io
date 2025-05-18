@@ -8,7 +8,10 @@
 .. type: text
 .. has_math: true
 
-The phenakistiscope is a rotating disk that produces short animations. It was invented in the 19th century, and the disks from that time are really beautiful. The animations they create are intriguing. In this `series </posts/phenakistiscope>`_ we look at a few of the ideas that result in these captivating works of art.
+In this `series of posts </categories/phenakistiscope>`_ we look at a few of the ideas behind an early animation toy, the phenakistiscope. And now it is time to explore
+spirals that perform more than one turn per disk rotation. These spirals will add a new dimension to our animations.
+
+.. TEASER_END
 
 Spirals and more spirals!
 -------------------------

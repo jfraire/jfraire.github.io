@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html prefix="        og: http://ogp.me/ns# article: http://ogp.me/ns/article#     " vocab="http://ogp.me/ns" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="jb_01.py">
+<meta name="viewport" content="width=device-width">
+<title>jb_01.py | La séptima vida</title>
+<link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../rss.xml">
+<link rel="canonical" href="https://jfraire.github.io/listings/jb_01.py.html">
+<!--[if lt IE 9]><script src="../assets/js/html5shiv-printshiv.min.js"></script><![endif]--><link href="../assets/css/rst.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/code.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/theme.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+</head>
+<body>
+
+<section class="section"><div class="container">
+    <nav class="nav"><div class="nav-left">
+        <a class="nav-item" href="https://jfraire.github.io/"><h1 class="title is-4">La séptima vida</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile"><a class="level-item" href="../archive.html">
+            <span class="icon">
+              <i class="fa fa-archive"></i>
+            </span>
+          </a>
+          <a class="level-item" href="../categories/">
+            <span class="icon">
+              <i class="fa fa-tags"></i>
+            </span>
+          </a>
+          <a class="level-item" href="../rss.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+          </a>
+          <a class="level-item" href="https://bsky.app/profile/verdeyazul.bsky.social">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          <a class="level-item" href="https://github.com/jfraire">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+        </nav>
+</div>
+    </nav>
+</div>
+</section><section class="section"><div class="container" id="content">
+    
+
+<nav class="breadcrumbs"><ul class="breadcrumb">
+<li><a href=".">listings</a></li>
+                <li>jb_01.py</li>
+</ul></nav><h1>jb_01.py
+            <small><a href="jb_01.py">(Source)</a></small>
+        </h1>
+    <div class="code"><table class="codetable">
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-1"><code data-line-number=" 1"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-1" name="listingsjb_01py-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pgzrun</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-2"><code data-line-number=" 2"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-2" name="listingsjb_01py-2"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-3"><code data-line-number=" 3"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-3" name="listingsjb_01py-3"></a><span class="n">WIDTH</span> <span class="o">=</span> <span class="mi">350</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-4"><code data-line-number=" 4"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-4" name="listingsjb_01py-4"></a><span class="n">HEIGHT</span> <span class="o">=</span> <span class="mi">256</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-5"><code data-line-number=" 5"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-5" name="listingsjb_01py-5"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-6"><code data-line-number=" 6"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-6" name="listingsjb_01py-6"></a><span class="n">BGSPEED</span> <span class="o">=</span> <span class="mi">1</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-7"><code data-line-number=" 7"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-7" name="listingsjb_01py-7"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-8"><code data-line-number=" 8"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-8" name="listingsjb_01py-8"></a><span class="c1"># Voici le fond</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-9"><code data-line-number=" 9"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-9" name="listingsjb_01py-9"></a><span class="n">background</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-10"><code data-line-number="10"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-10" name="listingsjb_01py-10"></a><span class="n">background</span><span class="p">[</span><span class="s1">'position'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-11"><code data-line-number="11"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-11" name="listingsjb_01py-11"></a><span class="n">background</span><span class="p">[</span><span class="s1">'night'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'city_background_night_small'</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-12"><code data-line-number="12"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-12" name="listingsjb_01py-12"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-13"><code data-line-number="13"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-13" name="listingsjb_01py-13"></a><span class="k">def</span><span class="w"> </span><span class="nf">update_background</span><span class="p">():</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-14"><code data-line-number="14"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-14" name="listingsjb_01py-14"></a>    <span class="n">background</span><span class="p">[</span><span class="s1">'position'</span><span class="p">]</span> <span class="o">-=</span> <span class="n">BGSPEED</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-15"><code data-line-number="15"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-15" name="listingsjb_01py-15"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-16"><code data-line-number="16"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-16" name="listingsjb_01py-16"></a><span class="c1"># 'hooks' de pygame zero</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-17"><code data-line-number="17"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-17" name="listingsjb_01py-17"></a><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">():</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-18"><code data-line-number="18"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-18" name="listingsjb_01py-18"></a>    <span class="n">update_background</span><span class="p">()</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-19"><code data-line-number="19"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-19" name="listingsjb_01py-19"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-20"><code data-line-number="20"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-20" name="listingsjb_01py-20"></a><span class="k">def</span><span class="w"> </span><span class="nf">draw</span><span class="p">():</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-21"><code data-line-number="21"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-21" name="listingsjb_01py-21"></a>    <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">background</span><span class="p">[</span><span class="s1">'night'</span><span class="p">],</span> <span class="p">(</span><span class="n">background</span><span class="p">[</span><span class="s1">'position'</span><span class="p">],</span> <span class="mi">0</span><span class="p">))</span>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-22"><code data-line-number="22"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-22" name="listingsjb_01py-22"></a>
+</code></td>
+</tr>
+<tr>
+<td class="linenos linenodiv"><a href="#listingsjb_01py-23"><code data-line-number="23"></code></a></td>
+<td class="code"><code><a id="listingsjb_01py-23" name="listingsjb_01py-23"></a><span class="n">pgzrun</span><span class="o">.</span><span class="n">go</span><span class="p">()</span>
+</code></td>
+</tr>
+</table></div>
+
+  </div>
+</section><section class="section"><div class="container has-text-centered">
+            <p>Contents © 2025         <a href="mailto:julio.fraire@gmail.com">Julio Fraire</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            
+  </div>
+</section><script src="../assets/js/all-nocdn.js"></script><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element) {
+            return element.getElementsByTagName('img')[0].alt;
+    }});
+    </script>
+</body>
+</html>

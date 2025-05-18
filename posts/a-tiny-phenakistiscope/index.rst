@@ -7,7 +7,9 @@
 .. description: A phenakistiscope circuit!
 .. type: text
 
-The phenakistiscope is a rotating disk that produces short animations. It was invented in the 19th century, and the disks from that time are really beautiful. The animations they create are intriguing. In this `series </posts/phenakistiscope>`_ we look at a few of the ideas that result in these captivating works of art.
+The phenakistiscope is a rotating disk that produces short animations. It was invented in the 19th century, and the disks from that time are really beautiful. In this last post of the `series </categories/phenakistiscope>`_ I will show you a little can of tea that blossomed into an animation box.
+
+.. TEASER_END
 
 A different kind of charm
 -------------------------

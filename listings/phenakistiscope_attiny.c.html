@@ -38,7 +38,7 @@
               <i class="fa fa-rss"></i>
             </span>
           </a>
-          <a class="level-item" href="https://twitter.com/juliofraire">
+          <a class="level-item" href="https://bsky.app/profile/verdeyazul.bsky.social">
             <span class="icon">
               <i class="fa fa-twitter"></i>
             </span>
@@ -94,22 +94,22 @@
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-7"><code data-line-number=" 7"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-7" name="listingsphenakistiscope_attinyc-7"></a><span class="cm">   ----------------------------------------------- */</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-7" name="listingsphenakistiscope_attinyc-7"></a><span class="cm">   ----------------------------------------------- */</span>
 </code></td>
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-8"><code data-line-number=" 8"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-8" name="listingsphenakistiscope_attinyc-8"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;avr/io.h&gt;</span><span class="cp"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-8" name="listingsphenakistiscope_attinyc-8"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;avr/io.h&gt;</span>
 </code></td>
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-9"><code data-line-number=" 9"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-9" name="listingsphenakistiscope_attinyc-9"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;avr/interrupt.h&gt;</span><span class="cp"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-9" name="listingsphenakistiscope_attinyc-9"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;avr/interrupt.h&gt;</span>
 </code></td>
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-10"><code data-line-number="10"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-10" name="listingsphenakistiscope_attinyc-10"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;util/delay.h&gt;</span><span class="cp"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-10" name="listingsphenakistiscope_attinyc-10"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;util/delay.h&gt;</span>
 </code></td>
 </tr>
 <tr>
@@ -144,7 +144,7 @@
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-17"><code data-line-number="17"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-17" name="listingsphenakistiscope_attinyc-17"></a><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">bright_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-17" name="listingsphenakistiscope_attinyc-17"></a><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">bright_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
 </code></td>
 </tr>
 <tr>
@@ -154,7 +154,7 @@
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-19"><code data-line-number="19"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-19" name="listingsphenakistiscope_attinyc-19"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="nf">read_adc</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">channel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-19" name="listingsphenakistiscope_attinyc-19"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="nf">read_adc</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">channel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </code></td>
 </tr>
 <tr>
@@ -174,17 +174,17 @@
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-23"><code data-line-number="23"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-23" name="listingsphenakistiscope_attinyc-23"></a><span class="w">    </span><span class="n">loop_until_bit_is_clear</span><span class="p">(</span><span class="n">ADCSRA</span><span class="p">,</span><span class="w"> </span><span class="n">ADSC</span><span class="p">);</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-23" name="listingsphenakistiscope_attinyc-23"></a><span class="w">    </span><span class="n">loop_until_bit_is_clear</span><span class="p">(</span><span class="n">ADCSRA</span><span class="p">,</span><span class="w"> </span><span class="n">ADSC</span><span class="p">);</span>
 </code></td>
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-24"><code data-line-number="24"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-24" name="listingsphenakistiscope_attinyc-24"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ADCH</span><span class="p">;</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-24" name="listingsphenakistiscope_attinyc-24"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ADCH</span><span class="p">;</span>
 </code></td>
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-25"><code data-line-number="25"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-25" name="listingsphenakistiscope_attinyc-25"></a><span class="p">}</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-25" name="listingsphenakistiscope_attinyc-25"></a><span class="p">}</span>
 </code></td>
 </tr>
 <tr>
@@ -194,7 +194,7 @@
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-27"><code data-line-number="27"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-27" name="listingsphenakistiscope_attinyc-27"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-27" name="listingsphenakistiscope_attinyc-27"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </code></td>
 </tr>
 <tr>
@@ -204,7 +204,7 @@
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-29"><code data-line-number="29"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-29" name="listingsphenakistiscope_attinyc-29"></a><span class="w">    </span><span class="n">DDRB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">SERVO</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">LED</span><span class="p">);</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-29" name="listingsphenakistiscope_attinyc-29"></a><span class="w">    </span><span class="n">DDRB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">SERVO</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">LED</span><span class="p">);</span>
 </code></td>
 </tr>
 <tr>
@@ -349,7 +349,7 @@
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-58"><code data-line-number="58"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-58" name="listingsphenakistiscope_attinyc-58"></a><span class="w">    </span><span class="n">TCCR1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS12</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS11</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS10</span><span class="p">);</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-58" name="listingsphenakistiscope_attinyc-58"></a><span class="w">    </span><span class="n">TCCR1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS12</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS11</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS10</span><span class="p">);</span>
 </code></td>
 </tr>
 <tr>
@@ -369,7 +369,7 @@
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-62"><code data-line-number="62"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-62" name="listingsphenakistiscope_attinyc-62"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-62" name="listingsphenakistiscope_attinyc-62"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 </code></td>
 </tr>
 <tr>
@@ -384,7 +384,7 @@
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-65"><code data-line-number="65"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-65" name="listingsphenakistiscope_attinyc-65"></a><span class="w">        </span><span class="n">OCR0A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_adc</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-65" name="listingsphenakistiscope_attinyc-65"></a><span class="w">        </span><span class="n">OCR0A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_adc</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 </code></td>
 </tr>
 <tr>
@@ -414,34 +414,34 @@
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-71"><code data-line-number="71"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-71" name="listingsphenakistiscope_attinyc-71"></a><span class="w">        </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">speed_servo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_adc</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-71" name="listingsphenakistiscope_attinyc-71"></a><span class="w">        </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">speed_servo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_adc</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
 </code></td>
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-72"><code data-line-number="72"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-72" name="listingsphenakistiscope_attinyc-72"></a><span class="w">        </span><span class="n">OCR1B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">)(</span><span class="mf">18.75</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">speed_servo</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">255.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">14.06</span><span class="p">);</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-72" name="listingsphenakistiscope_attinyc-72"></a><span class="w">        </span><span class="n">OCR1B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">)(</span><span class="mf">18.75</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">speed_servo</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">255.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">14.06</span><span class="p">);</span>
 </code></td>
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-73"><code data-line-number="73"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-73" name="listingsphenakistiscope_attinyc-73"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-73" name="listingsphenakistiscope_attinyc-73"></a><span class="w">    </span><span class="p">}</span>
 </code></td>
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-74"><code data-line-number="74"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-74" name="listingsphenakistiscope_attinyc-74"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-74" name="listingsphenakistiscope_attinyc-74"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 </code></td>
 </tr>
 <tr>
 <td class="linenos linenodiv"><a href="#listingsphenakistiscope_attinyc-75"><code data-line-number="75"></code></a></td>
-<td class="code"><code><a id="listingsphenakistiscope_attinyc-75" name="listingsphenakistiscope_attinyc-75"></a><span class="p">}</span><span class="w"></span>
+<td class="code"><code><a id="listingsphenakistiscope_attinyc-75" name="listingsphenakistiscope_attinyc-75"></a><span class="p">}</span>
 </code></td>
 </tr>
 </table></div>
 
   </div>
 </section><section class="section"><div class="container has-text-centered">
-            <p>Contents © 2021         <a href="mailto:julio.fraire@gmail.com">Julio Fraire</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            <p>Contents © 2025         <a href="mailto:julio.fraire@gmail.com">Julio Fraire</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
             
   </div>
 </section><script src="../assets/js/all-nocdn.js"></script><script>

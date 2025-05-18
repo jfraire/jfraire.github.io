@@ -6,23 +6,35 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
+  <loc>https://jfraire.github.io/categories/astrophotography.xml</loc>
+  <lastmod>2025-05-18T09:27:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jfraire.github.io/categories/cat_astrophotograpy.xml</loc>
+  <lastmod>2025-05-18T09:27:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://jfraire.github.io/categories/cat_electronics.xml</loc>
-  <lastmod>2021-12-29T00:10:00Z</lastmod>
+  <lastmod>2025-05-17T14:39:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jfraire.github.io/categories/phenakistiscope.xml</loc>
-  <lastmod>2021-12-29T00:10:00Z</lastmod>
+  <lastmod>2025-05-17T14:39:00Z</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://jfraire.github.io/categories/python.xml</loc>
+  <lastmod>2025-05-18T09:27:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jfraire.github.io/galleries/rss.xml</loc>
-  <lastmod>2021-12-28T00:30:00Z</lastmod>
+  <lastmod>2025-05-18T09:31:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jfraire.github.io/rss.xml</loc>
-  <lastmod>2021-12-29T00:10:00Z</lastmod>
+  <lastmod>2025-05-18T09:27:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://jfraire.github.io/sitemap.xml</loc>
-  <lastmod>2021-12-29T00:10:00Z</lastmod>
+  <lastmod>2025-05-18T09:52:00Z</lastmod>
  </sitemap>
 </sitemapindex>

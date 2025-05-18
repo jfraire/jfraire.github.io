@@ -7,19 +7,31 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://jfraire.github.io/</loc>
-  <lastmod>2021-12-16T22:01:00Z</lastmod>
+  <lastmod>2025-05-17T14:39:00Z</lastmod>
  </url>
  <url>
   <loc>https://jfraire.github.io/2021/</loc>
   <lastmod>2021-12-16T22:01:00Z</lastmod>
  </url>
  <url>
+  <loc>https://jfraire.github.io/2025/</loc>
+  <lastmod>2025-05-17T14:39:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://jfraire.github.io/archive.html</loc>
-  <lastmod>2021-12-28T00:30:00Z</lastmod>
+  <lastmod>2025-05-18T09:31:00Z</lastmod>
  </url>
  <url>
   <loc>https://jfraire.github.io/categories/</loc>
-  <lastmod>2021-12-16T22:01:00Z</lastmod>
+  <lastmod>2025-05-17T14:39:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://jfraire.github.io/categories/astrophotography/</loc>
+  <lastmod>2025-05-17T14:39:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://jfraire.github.io/categories/cat_astrophotograpy/</loc>
+  <lastmod>2025-05-17T14:39:00Z</lastmod>
  </url>
  <url>
   <loc>https://jfraire.github.io/categories/cat_electronics/</loc>
@@ -30,20 +42,28 @@
   <lastmod>2021-12-16T22:01:00Z</lastmod>
  </url>
  <url>
+  <loc>https://jfraire.github.io/categories/python/</loc>
+  <lastmod>2025-05-17T14:39:00Z</lastmod>
+ </url>
+ <url>
   <loc>https://jfraire.github.io/galleries/</loc>
   <lastmod>2021-12-07T22:36:00Z</lastmod>
  </url>
  <url>
   <loc>https://jfraire.github.io/listings/</loc>
-  <lastmod>2021-12-27T23:56:00Z</lastmod>
+  <lastmod>2025-05-17T10:56:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://jfraire.github.io/listings/jb_01.py.html</loc>
+  <lastmod>2025-05-18T09:31:00Z</lastmod>
  </url>
  <url>
   <loc>https://jfraire.github.io/listings/phenakistiscope_attiny.c.html</loc>
-  <lastmod>2021-12-28T18:39:00Z</lastmod>
+  <lastmod>2025-05-18T09:31:00Z</lastmod>
  </url>
  <url>
-  <loc>https://jfraire.github.io/posts/a-balancing-monkey-and-a-jumping-zebra/</loc>
-  <lastmod>2021-12-17T00:14:00Z</lastmod>
+  <loc>https://jfraire.github.io/posts/a-monkey-and-a-zebra/</loc>
+  <lastmod>2025-05-17T10:54:00Z</lastmod>
  </url>
  <url>
   <loc>https://jfraire.github.io/posts/a-tiny-phenakistiscope/</loc>
@@ -60,5 +80,9 @@
  <url>
   <loc>https://jfraire.github.io/posts/playing-with-spirals/</loc>
   <lastmod>2021-12-22T23:04:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://jfraire.github.io/posts/stacking-of-astronomical-images/</loc>
+  <lastmod>2025-05-18T00:19:00Z</lastmod>
  </url>
 </urlset>

@@ -2,7 +2,7 @@
 <html prefix="        og: http://ogp.me/ns# article: http://ogp.me/ns/article#     " vocab="http://ogp.me/ns" lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="description" content="del gato que perdió la cuenta">
+<meta name="description" content="Una vida más de un gato que perdió la cuenta">
 <meta name="viewport" content="width=device-width">
 <title>La séptima vida</title>
 <link href="assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
@@ -15,7 +15,7 @@
 <link href="assets/css/theme.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-<link rel="prefetch" href="posts/a-tiny-phenakistiscope/" type="text/html">
+<link rel="prefetch" href="posts/stacking-of-astronomical-images/" type="text/html">
 </head>
 <body>
 
@@ -39,7 +39,7 @@
               <i class="fa fa-rss"></i>
             </span>
           </a>
-          <a class="level-item" href="https://twitter.com/juliofraire">
+          <a class="level-item" href="https://bsky.app/profile/verdeyazul.bsky.social">
             <span class="icon">
               <i class="fa fa-twitter"></i>
             </span>
@@ -58,166 +58,48 @@
 
     
 
-    <article><h2 class="subtitle is-6">2021-12-28 00:15</h2>
+    <article><h2 class="subtitle is-6">2025-05-17 13:50</h2>
+      <h1 class="title"><a href="posts/stacking-of-astronomical-images/">Stacking of Astronomical Images</a></h1>
+      <div class="content">
+    <div>
+<p>Astrophotographers obtain stunning images by taking tens or even hundreds of photos. By stacking these images, they create an average picture that minimizes noise.
+Sounds easy, like a good chance to learn some image processing with the <a class="reference external" href="https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html">OpenCV</a> library.</p>
+<p>This post is about my exploration towards building a script to align and stack some astronomical photographies.</p>
+<a class="button is-link" href="posts/stacking-of-astronomical-images/" style="height:28px"> Read more <span class="icon is-small"> <i class="fa fa-angle-double-right"></i></span></a>
+</div>
+      </div>
+    </article><article><h2 class="subtitle is-6">2021-12-28 00:15</h2>
       <h1 class="title"><a href="posts/a-tiny-phenakistiscope/">A tiny phenakistiscope</a></h1>
       <div class="content">
     <div>
-<p>The phenakistiscope is a rotating disk that produces short animations. It was invented in the 19th century, and the disks from that time are really beautiful. The animations they create are intriguing. In this <a class="reference external" href="posts/phenakistiscope">series</a> we look at a few of the ideas that result in these captivating works of art.</p>
-<section id="a-different-kind-of-charm"><h2>A different kind of charm</h2>
-<p>I know. The XIX century animations are charming. Seeing the rotating disks through their slits, in front of a mirror, would transport you to another world, another ambiance of high hats, beautiful dresses, spectacles… a refined atmosphere. And I am about to break all this by talking about servo-motors, LEDs and micro-controllers.</p>
-<p>But bear with me. We are talking about a little ATtiny85 micro-controller. Only 8 terminals in a sweet thru-hole package. This tiny fellow can use a continuous-rotation servo-motor, some potentiometers, and a bunch of LEDs to replace the slits and the mirror. And the best part, it will let you see the animations at the same time as your kids.</p>
-<p>The idea is simple: The servo-motor spins the disk while the LEDs blink. The disk will advance a certain angle between two LED flashes. If this angle coincides with the design of the disk, the animation will come to life!</p>
-<p>And this is where the two potentiometers come in: One of them will let you change the speed of the servo-motor. The other potentiometer will change the time between the flashes of the LEDs.</p>
-<img alt="The phenakistiscope assembled in a tea can" src="images/phenakistiscope.jpg" style="width: 350px; height: 284px;"></section><section id="a-brief-description-of-the-program-and-the-circuit"><h2>A brief description of the program and the circuit</h2>
-<p>The ATtiny85 is a nice piece of micro-controller. The program configures a timer to produce the PWM signal  for the servo-motor, another timer for the LEDs, and the ADC to read the two potentiometers. Then, it uses the readings of the potentiometers to change the limits of the timers. And that’s it!</p>
-<p>You can see the listing of the program below. It has more comments than code because the actual code is… cryptic. You should check the <a class="reference external" href="https://www.microchip.com/en-us/product/ATtiny85">datasheet</a> to make sense of it. It is almost pure configuration. The only logic is there to copy the potentiometer readings to the timers.</p>
-<p><a class="reference external" href="listings/phenakistiscope_attiny.c.html">phenakistiscope_attiny.c</a>  <a class="reference external" href="listings/phenakistiscope_attiny.c">(Source)</a></p>
-<pre class="code c"><a id="rest_code_872f4d9d80664c73afadb43b78541a18-1" name="rest_code_872f4d9d80664c73afadb43b78541a18-1"></a><span class="cm">/* -----------------------------------------------</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-2" name="rest_code_872f4d9d80664c73afadb43b78541a18-2"></a><span class="cm">   Program that controls the period of a PWM</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-3" name="rest_code_872f4d9d80664c73afadb43b78541a18-3"></a><span class="cm">   signal with a potentiometer, while it moves a</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-4" name="rest_code_872f4d9d80664c73afadb43b78541a18-4"></a><span class="cm">   servo motor at a constant speed.</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-5" name="rest_code_872f4d9d80664c73afadb43b78541a18-5"></a><span class="cm">   It uses timer 0, 1, and the ADC</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-6" name="rest_code_872f4d9d80664c73afadb43b78541a18-6"></a><span class="cm">   Works with ATTiny85</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-7" name="rest_code_872f4d9d80664c73afadb43b78541a18-7"></a><span class="cm">   ----------------------------------------------- */</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-8" name="rest_code_872f4d9d80664c73afadb43b78541a18-8"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;avr/io.h&gt;</span><span class="cp"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-9" name="rest_code_872f4d9d80664c73afadb43b78541a18-9"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;avr/interrupt.h&gt;</span><span class="cp"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-10" name="rest_code_872f4d9d80664c73afadb43b78541a18-10"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;util/delay.h&gt;</span><span class="cp"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-11" name="rest_code_872f4d9d80664c73afadb43b78541a18-11"></a>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-12" name="rest_code_872f4d9d80664c73afadb43b78541a18-12"></a><span class="cp">#define LED PB1</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-13" name="rest_code_872f4d9d80664c73afadb43b78541a18-13"></a><span class="cp">#define SERVO PB4</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-14" name="rest_code_872f4d9d80664c73afadb43b78541a18-14"></a><span class="cp">#define POT1 ADC1</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-15" name="rest_code_872f4d9d80664c73afadb43b78541a18-15"></a><span class="cp">#define POT2 ADC3</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-16" name="rest_code_872f4d9d80664c73afadb43b78541a18-16"></a>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-17" name="rest_code_872f4d9d80664c73afadb43b78541a18-17"></a><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">bright_time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-18" name="rest_code_872f4d9d80664c73afadb43b78541a18-18"></a>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-19" name="rest_code_872f4d9d80664c73afadb43b78541a18-19"></a><span class="kt">uint8_t</span><span class="w"> </span><span class="nf">read_adc</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">channel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-20" name="rest_code_872f4d9d80664c73afadb43b78541a18-20"></a><span class="w">    </span><span class="n">ADMUX</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="p">(</span><span class="mh">0xF0</span><span class="p">);</span><span class="w">                        </span><span class="c1">// Clear the channel selection</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-21" name="rest_code_872f4d9d80664c73afadb43b78541a18-21"></a><span class="w">    </span><span class="n">ADMUX</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="n">channel</span><span class="p">;</span><span class="w">                       </span><span class="c1">// Read from ADCX</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-22" name="rest_code_872f4d9d80664c73afadb43b78541a18-22"></a><span class="w">    </span><span class="n">ADCSRA</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADSC</span><span class="p">);</span><span class="w">                  </span><span class="c1">// Start conversion</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-23" name="rest_code_872f4d9d80664c73afadb43b78541a18-23"></a><span class="w">    </span><span class="n">loop_until_bit_is_clear</span><span class="p">(</span><span class="n">ADCSRA</span><span class="p">,</span><span class="w"> </span><span class="n">ADSC</span><span class="p">);</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-24" name="rest_code_872f4d9d80664c73afadb43b78541a18-24"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ADCH</span><span class="p">;</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-25" name="rest_code_872f4d9d80664c73afadb43b78541a18-25"></a><span class="p">}</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-26" name="rest_code_872f4d9d80664c73afadb43b78541a18-26"></a>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-27" name="rest_code_872f4d9d80664c73afadb43b78541a18-27"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-28" name="rest_code_872f4d9d80664c73afadb43b78541a18-28"></a><span class="w">    </span><span class="c1">// Set LED and SERVO pins for output</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-29" name="rest_code_872f4d9d80664c73afadb43b78541a18-29"></a><span class="w">    </span><span class="n">DDRB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">SERVO</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">LED</span><span class="p">);</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-30" name="rest_code_872f4d9d80664c73afadb43b78541a18-30"></a>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-31" name="rest_code_872f4d9d80664c73afadb43b78541a18-31"></a><span class="w">    </span><span class="c1">// Initialize the ADC -- Use VCC as reference</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-32" name="rest_code_872f4d9d80664c73afadb43b78541a18-32"></a><span class="w">    </span><span class="n">ADMUX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">                              </span><span class="c1">// Clear REFS0-2 select VCC as ref</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-33" name="rest_code_872f4d9d80664c73afadb43b78541a18-33"></a><span class="w">    </span><span class="n">ADMUX</span><span class="w">  </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADLAR</span><span class="p">);</span><span class="w">                 </span><span class="c1">// Use the most significant 8 bits</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-34" name="rest_code_872f4d9d80664c73afadb43b78541a18-34"></a><span class="w">    </span><span class="n">ADCSRA</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADPS1</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADPS0</span><span class="p">);</span><span class="w">  </span><span class="c1">// Set prescaler to 1/8</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-35" name="rest_code_872f4d9d80664c73afadb43b78541a18-35"></a><span class="w">    </span><span class="n">ADCSRA</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">ADEN</span><span class="p">);</span><span class="w">                  </span><span class="c1">// Enable ADC</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-36" name="rest_code_872f4d9d80664c73afadb43b78541a18-36"></a>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-37" name="rest_code_872f4d9d80664c73afadb43b78541a18-37"></a><span class="w">    </span><span class="c1">// This is the timer for the LEDs</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-38" name="rest_code_872f4d9d80664c73afadb43b78541a18-38"></a><span class="w">    </span><span class="c1">// Configure timer 0 in fast PWM mode with variable period</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-39" name="rest_code_872f4d9d80664c73afadb43b78541a18-39"></a><span class="w">    </span><span class="c1">// The period is modified by chaning OCR0A, and the signal</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-40" name="rest_code_872f4d9d80664c73afadb43b78541a18-40"></a><span class="w">    </span><span class="c1">// turns off on OCR0B</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-41" name="rest_code_872f4d9d80664c73afadb43b78541a18-41"></a><span class="w">    </span><span class="c1">// So, output is at OC0B, PB1</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-42" name="rest_code_872f4d9d80664c73afadb43b78541a18-42"></a><span class="w">    </span><span class="n">TCCR0A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">WGM01</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">WGM00</span><span class="p">);</span><span class="w"> </span><span class="c1">// Fast PWM mode reseting at OCR0A</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-43" name="rest_code_872f4d9d80664c73afadb43b78541a18-43"></a><span class="w">    </span><span class="n">TCCR0B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">WGM02</span><span class="p">);</span><span class="w">                </span><span class="c1">// (mode 7)</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-44" name="rest_code_872f4d9d80664c73afadb43b78541a18-44"></a><span class="w">    </span><span class="n">TCCR0A</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">COM0B1</span><span class="p">);</span><span class="w">              </span><span class="c1">// Non-inverting output on OC0B (PB1)</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-45" name="rest_code_872f4d9d80664c73afadb43b78541a18-45"></a><span class="w">    </span><span class="n">TCCR0B</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS02</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS00</span><span class="p">);</span><span class="w">  </span><span class="c1">// Set the prescaler to 1/1024</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-46" name="rest_code_872f4d9d80664c73afadb43b78541a18-46"></a><span class="w">    </span><span class="n">OCR0B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bright_time</span><span class="p">;</span><span class="w">                  </span><span class="c1">// Time to keep the output high</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-47" name="rest_code_872f4d9d80664c73afadb43b78541a18-47"></a>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-48" name="rest_code_872f4d9d80664c73afadb43b78541a18-48"></a><span class="w">    </span><span class="c1">// And this is for the servo motor</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-49" name="rest_code_872f4d9d80664c73afadb43b78541a18-49"></a><span class="w">    </span><span class="c1">// Configure timer 1 in PWM mode. Output is PB4 (OC1B)</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-50" name="rest_code_872f4d9d80664c73afadb43b78541a18-50"></a><span class="w">    </span><span class="c1">// The ON period should last between 900 and 2100 us --&gt; 1200 us</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-51" name="rest_code_872f4d9d80664c73afadb43b78541a18-51"></a><span class="w">    </span><span class="c1">// And the frequency of the signal should be between 50 and 100 Hz</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-52" name="rest_code_872f4d9d80664c73afadb43b78541a18-52"></a><span class="w">    </span><span class="c1">// Because it is an 8-bit timer, its period is divided by 256, maximum</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-53" name="rest_code_872f4d9d80664c73afadb43b78541a18-53"></a><span class="w">    </span><span class="c1">// A prescaler of 64 will give a period of 16.4 ms with a resolution of</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-54" name="rest_code_872f4d9d80664c73afadb43b78541a18-54"></a><span class="w">    </span><span class="c1">// 64 us</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-55" name="rest_code_872f4d9d80664c73afadb43b78541a18-55"></a><span class="w">    </span><span class="c1">// The 1200 us can be divided into only 18.75 bins...</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-56" name="rest_code_872f4d9d80664c73afadb43b78541a18-56"></a><span class="w">    </span><span class="n">GTCCR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">PWM1B</span><span class="p">);</span><span class="w">        </span><span class="c1">// Enable PWM mode on OCR1A</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-57" name="rest_code_872f4d9d80664c73afadb43b78541a18-57"></a><span class="w">    </span><span class="n">GTCCR</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">COM1B1</span><span class="p">);</span><span class="w">      </span><span class="c1">// OC1A turns on at 0, resets at OCR1C</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-58" name="rest_code_872f4d9d80664c73afadb43b78541a18-58"></a><span class="w">    </span><span class="n">TCCR1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS12</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS11</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">CS10</span><span class="p">);</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-59" name="rest_code_872f4d9d80664c73afadb43b78541a18-59"></a><span class="w">    </span><span class="n">OCR1C</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xFF</span><span class="p">;</span><span class="w">                </span><span class="c1">// Pulse duration of 256 * 64 us, or 16.38 ms</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-60" name="rest_code_872f4d9d80664c73afadb43b78541a18-60"></a>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-61" name="rest_code_872f4d9d80664c73afadb43b78541a18-61"></a><span class="w">    </span><span class="c1">// ------ Event loop ------ //</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-62" name="rest_code_872f4d9d80664c73afadb43b78541a18-62"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-63" name="rest_code_872f4d9d80664c73afadb43b78541a18-63"></a><span class="w">        </span><span class="c1">// Read the 1st potentiometer and change the period of the PWM</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-64" name="rest_code_872f4d9d80664c73afadb43b78541a18-64"></a><span class="w">        </span><span class="c1">// signal for the LED in timer 0</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-65" name="rest_code_872f4d9d80664c73afadb43b78541a18-65"></a><span class="w">        </span><span class="n">OCR0A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_adc</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-66" name="rest_code_872f4d9d80664c73afadb43b78541a18-66"></a>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-67" name="rest_code_872f4d9d80664c73afadb43b78541a18-67"></a><span class="w">        </span><span class="c1">// Read the 2nd potentiometer and change the high duration of the PWM</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-68" name="rest_code_872f4d9d80664c73afadb43b78541a18-68"></a><span class="w">        </span><span class="c1">// signal for the servo motor in timer 1</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-69" name="rest_code_872f4d9d80664c73afadb43b78541a18-69"></a><span class="w">        </span><span class="c1">// The 0-255 signal should be mapped to 0-18.75</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-70" name="rest_code_872f4d9d80664c73afadb43b78541a18-70"></a><span class="w">        </span><span class="c1">// The minimum pulse is 900 us, or 14 clock ticks of 64 us</span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-71" name="rest_code_872f4d9d80664c73afadb43b78541a18-71"></a><span class="w">        </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">speed_servo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_adc</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-72" name="rest_code_872f4d9d80664c73afadb43b78541a18-72"></a><span class="w">        </span><span class="n">OCR1B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="p">)(</span><span class="mf">18.75</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">speed_servo</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">255.0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">14.06</span><span class="p">);</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-73" name="rest_code_872f4d9d80664c73afadb43b78541a18-73"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-74" name="rest_code_872f4d9d80664c73afadb43b78541a18-74"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<a id="rest_code_872f4d9d80664c73afadb43b78541a18-75" name="rest_code_872f4d9d80664c73afadb43b78541a18-75"></a><span class="p">}</span><span class="w"></span>
-</pre>
-<p>In terms of the circuit, the micro-controller doesn’t require much. The circuit has just a voltage regulator, and terminals for the potentiometers, servo-motor, and LEDs. Only one pin is used for the LEDs. I should have put a transistor instead.</p>
-<p>I put everything in a <a class="reference external" href="https://github.com/jfraire/phenakistiscope">repository</a>, in GitHub. It includes the KiCAD files and the code for the micro-controller.</p>
-<img alt="The phenakistiscope circuit assembled in a tea can" src="images/open_phenakistiscope.jpg" style="width: 250px; height: 444px;"></section><section id="my-own-animated-disk"><h2>My own animated disk!</h2>
-<p>And this is my first animated disk. The pleasure to see it animated is unbelievable. It lacks the charm of the XIX century but has a reminiscence of aliens and cows.</p>
-<img alt="An animated disk of aliens abducting cows" src="images/cow_abduction.gif" style="width: 400px; height: 395px;"><p>And here it is, the real thing:</p>
-<div class="youtube-video">
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Ikgw9VhqUUA?rel=0&amp;wmode=transparent" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
-</div></section><section id="about-this-series"><h2>About this series</h2>
-<p>This is the fifth and last article about the phenakistiscope. In this short series, I describe some of the ideas used to animate the disks. The first article is <a class="reference external" href="posts/phenakistiscope">here</a>.</p>
-</section>
+<p>The phenakistiscope is a rotating disk that produces short animations. It was invented in the 19th century, and the disks from that time are really beautiful. In this last post of the <a class="reference external" href="categories/phenakistiscope">series</a> I will show you a little can of tea that blossomed into an animation box.</p>
+<a class="button is-link" href="posts/a-tiny-phenakistiscope/" style="height:28px"> Read more <span class="icon is-small"> <i class="fa fa-angle-double-right"></i></span></a>
 </div>
       </div>
     </article><article><h2 class="subtitle is-6">2021-12-22 22:48</h2>
       <h1 class="title"><a href="posts/playing-with-spirals/">Playing with spirals</a></h1>
       <div class="content">
     <div>
-<p>The phenakistiscope is a rotating disk that produces short animations. It was invented in the 19th century, and the disks from that time are really beautiful. The animations they create are intriguing. In this <a class="reference external" href="posts/phenakistiscope">series</a> we look at a few of the ideas that result in these captivating works of art.</p>
-<section id="spirals-and-more-spirals"><h2>Spirals and more spirals!</h2>
-<p>In the <a class="reference external" href="posts/phenakistiscope">first article</a> of the series, we saw how a spiral forms a radial movement when animated in a phenakistiscope. Actually, the polar equation of a spiral that starts in the center of the disk looks very similar to that of a line in Cartesian coordinates: <span class="math">\(r = m \theta\)</span>. It simply says that the radius changes in proportion to the rotation angle.</p>
-<p>So, if we put stuff in such a spiral, it will move along radial lines. Now, if the radius increments slowly for each change in angle, the spiral can last for several complete turns before it reaches the brim of the disk. In the disk below, the spiral completes at least 7 turns of 20 frames each. The visual effect is stunning:</p>
-<img alt="Disk with colorful circles ordered along a spiral" src="images/circles-spiral.png" style="width: 300px; height: 300px;"><img alt="Animated disk with colorful circles ordered along a spiral" src="images/circles-spiral.gif" style="width: 300px; height: 300px;"><p>The same idea is at work in the next, beautiful disk:</p>
-<img alt="Animated disk of monsters" src="images/phena_greendemons_small.gif" style="width: 300px; height: 300px;"></section><section id="an-homage-to-joseph-plateau-the-inventor-of-the-phenakistiscope"><h2>An homage to Joseph Plateau, the inventor of the phenakistiscope</h2>
-<p>Google produced a set of <em>doodles</em> to celebrate Joseph Plateau and his early animations. I find the disk below very interesting. It combines two movements: The frying pan is moving up and down because its frames are drawn along a circle. But the pancake in the animation seems to move in a parabolic trajectory as dictated by the laws of physics. Note how it does not move in a circle, nor in a spiral! Also, the pancake is not moving from the center, but from the brim of the disk.</p>
-<img alt="Disk drawn by Google in homage of Joseph Plateau" src="images/plateau-google.png" style="width: 223px; height: 225px;"><img alt="Disk drawn by Google in homage of Joseph Plateau, animated" src="images/plateau-google.gif" style="width: 223px; height: 225px;"></section><section id="about-this-series"><h2>About this series</h2>
-<p>This is the fourth article about the phenakistiscope. In this short series, I describe some of the ideas used to animate the disks. The first article is <a class="reference external" href="posts/phenakistiscope">here</a>.</p>
-<p>The <a class="reference external" href="posts/a-tiny-phenakistiscope">next article</a> will discuss a little machine to animate cardboard disks!</p>
-</section>
+<p>In this <a class="reference external" href="categories/phenakistiscope">series of posts</a> we look at a few of the ideas behind an early animation toy, the phenakistiscope. And now it is time to explore
+spirals that perform more than one turn per disk rotation. These spirals will add a new dimension to our animations.</p>
+<a class="button is-link" href="posts/playing-with-spirals/" style="height:28px"> Read more <span class="icon is-small"> <i class="fa fa-angle-double-right"></i></span></a>
 </div>
       </div>
     </article><article><h2 class="subtitle is-6">2021-12-16 23:41</h2>
-      <h1 class="title"><a href="posts/a-balancing-monkey-and-a-jumping-zebra/">A balancing monkey and a jumping zebra</a></h1>
+      <h1 class="title"><a href="posts/a-monkey-and-a-zebra/">A balancing monkey and a jumping zebra</a></h1>
       <div class="content">
     <div>
-<p>The phenakistiscope is a rotating disk that produces short animations. It was invented in the 19th century, and the disks from that time are really beautiful. The animations they create are intriguing. In this <a class="reference external" href="posts/phenakistiscope">series</a> we look at a few of the ideas that result in these captivating works of art.</p>
-<section id="a-disk-with-many-elements"><h2>A disk with many elements</h2>
-<p>Up and down movement can remind us of the sun and the moon, of birds flying, of sea waves… or of monkeys and zebras! Take a look at this nice animation. Several things are going on:</p>
-<ul class="simple">
-<li><p>Some hoops are turning in-place, close to the center of the disk</p></li>
-<li><p>A red ball moves around the disk and goes through the turning hoops</p></li>
-<li><p>A monkey swings from branch to branch, close to the border of the disk</p></li>
-<li><p>A zebra jumps through two trees at the center of the disk</p></li>
-</ul>
-<img alt="Animated disk of monkeys and zebras moving up and down" src="images/monkeys_and_zebras.gif" style="width: 300px; height: 300px;"><p>The first two elements of the animation are described <a class="reference external" href="posts/phenakistiscope">in the first article of the series</a>. The hoops are stationary because there are as many hoops as slits in the disk, and the number of slits determines the fixed angle between animation frames.</p>
-<p>The red ball is moving through the hoops because there are less ball images than slits. So, the angle between the balls is <em>larger</em> than the angle that the disk rotates at every frame, and therefore, the balls do not arrive to their previous position. They move forward (or backwards!)</p>
-<p>But the monkey and the zebras? Well, they <em>also</em> move forward. There are less images of the monkey and the zebra than slits in the disk. But that is not all: They move up and down! And this is very interesting.</p>
-</section><section id="moving-objects-up-and-down"><h2>Moving objects up and down</h2>
-<p>To draw the up and down movement you can do like before, with the radial lines: You draw the first image, you turn the disk, draw the next one a little higher, repeat, eventually you start drawing a little bit lower, you reach the bottom, and then you draw higher again.</p>
-<p>Let’s see that with more detail. You start with the disk at 0° and put your first zebra. The disk turns 30° and the zebra goes up a little. The disk turns again, to 60°, and the zebra keeps going up. The zebra reaches the top at 90°. At 120°, it is now going down. When it reaches 180°, the zebra is at the same distance from the center as the initial drawing. It continues to go down until 270°, when it hits the bottom, and starts to go back up until the last image. This description looks like a sinusoidal curve! And have you guessed what is the shape actually drawn in the disk? It is a circle!</p>
-<img alt="Disk of a monkey and a zebra and other elements" src="images/monkeys_and_zebras.png" style="width: 300px; height: 300px;"><img alt="Fitting images in circles results in up and down movement" src="images/monkeys_and_zebras_circles.png" style="width: 300px; height: 300px;"></section><section id="conclusion"><h2>Conclusion</h2>
-<p>Fitting images in circles results in up and down movement when the disk rotates! Another conclusion? This is an interesting way of thinking about sinusoidal waves!</p>
-<p>So far, we have discussed two movements: Tangential and radial. <a class="reference external" href="posts/playing-with-spirals">In the next article</a> we will talk about objects that move “up and down”.</p>
-</section><section id="about-this-series"><h2>About this series</h2>
-<p>This is the third article about the phenakistiscope. In this short series, I describe some of the ideas used to animate the disks. The first article is <a class="reference external" href="posts/phenakistiscope">here</a>.</p>
-<p>The image used above can be found in <a class="reference external" href="http://loc.gov/pictures/resource/cph.3g08091/">the library of congress of the United States</a> and it is in the public domain.</p>
-</section>
+<p>This is the third article about the <a class="reference external" href="categories/phenakistiscope">phenakistiscope</a>, an amusing, early animation toy. It builds cyclic animations of a few frames and yet, it allows for
+the creation of interesting movements. In this post, I invite you to read about monkeys swinging around branches and zebras jumping through trees.</p>
+<a class="button is-link" href="posts/a-monkey-and-a-zebra/" style="height:28px"> Read more <span class="icon is-small"> <i class="fa fa-angle-double-right"></i></span></a>
 </div>
       </div>
     </article><article><h2 class="subtitle is-6">2021-12-15 22:55</h2>
       <h1 class="title"><a href="posts/animating-radial-movements/">Animating radial movements</a></h1>
       <div class="content">
     <div>
-<p>In the <a class="reference external" href="posts/phenakistiscope">first article of this series</a> we discussed about the phenakistiscope, a rotating disk that produces short animations. In that post we saw a running horse and how it was made to move forward by having less frames than disk stops. Movement was <em>tangential</em>. In this article, we will talk about <em>radial</em> movements.</p>
-<section id="animating-radial-movements"><h2>Animating radial movements</h2>
-<p>To make a feature move in a straight line, start by placing the first frame in the disk. For example, close to the border. Turn the disk by the angle of the animation (30° for 12 frames, for example) and draw the next frame <em>along the line you want to trace</em>. Continue until you have all the frames you want. At the end of this exercise, you will have a spiral!</p>
-<p>This disk from 1833 shows a man feeding a frog with some red balls. The balls are drawn along a spiral, but in the animation, you will see them falling along a radial straight line.</p>
-<img alt="Disk from 1833 that is animated when spun" src="images/frogs_feeding.png" style="width: 300px; height: 300px;"><img alt="Animated disk of red balls moving along straight lines" src="images/frogs_feeding.gif" style="width: 300px; height: 300px;"><p>So far, we have discussed two movements: Tangential and radial. <a class="reference external" href="posts/a-balancing-monkey-and-a-jumping-zebra">In the next article</a> we will talk about objects that move “up and down”, radially.</p>
-</section><section id="about-this-series"><h2>About this series</h2>
-<p>This is the second article about the phenakistiscope. In this short series, I describe some of the ideas used to animate the disks. The first article is <a class="reference external" href="posts/phenakistiscope">here</a>.</p>
-<p>The image used above can be found in <a class="reference external" href="http://loc.gov/pictures/resource/cph.3g08091/">the library of congress of the United States</a> and it is in the public domain.</p>
-</section>
+<p>In the <a class="reference external" href="categories/phenakistiscope">first article of this series</a> we discussed about the phenakistiscope, a rotating disk that produces short animations. In that post we saw a running horse and how it was made to move forward by having less frames than disk stops. Movement was <em>tangential</em>. In this article, we will talk about <em>radial</em> movements.</p>
+<a class="button is-link" href="posts/animating-radial-movements/" style="height:28px"> Read more <span class="icon is-small"> <i class="fa fa-angle-double-right"></i></span></a>
 </div>
       </div>
     </article><article><h2 class="subtitle is-6">2021-12-07 23:52</h2>
@@ -228,16 +110,7 @@
 <p>Soon, paper toys were sold all around the globe with gorgeous, short animations. The user would look into a mirror through slits in a rotating cardboard disk. If the disk were held still, viewing the image reflection through a single slit would freeze it at a particular angle; viewing it through each slit in sequence would then create the illusion of movement. The beautiful images would burst into life.</p>
 <p>It is easy nowadays to find beautiful disks for this kind of wonderful animations. You can indeed print them, glue them on cardboard, cut the slits open and spin them in front of a mirror. Or, you can animate them into a GIF file. Even better, you can animate them with a small motor and stroboscopic lights!</p>
 <p>But let's not run ahead ourselves, and let's talk about the disks first.</p>
-<section id="beautiful-disks-and-how-they-work"><h2>Beautiful disks (and how they work)</h2>
-<p>Consider this disk from 1893. It shows a running horse. Let's make an experiment in our minds: Imagine that your eyes are closed and that you open them briefly and see the disk. Now, using your imagination, rotate the disk by 1/12th of a turn and open your eyes for another brief moment. You would find that the <em>next</em> frame of the running horse has replaced the original. The horse is still at the same place, but its pose changed slightly. Repeat many times. Now you can see the animation with the eyes of your imagination! (but you can still cheat and see the image below).</p>
-<img alt="Disk from 1893 that is animated when spun" src="images/running_horse.png" style="width: 300px; height: 301px;"><img alt="Disk animated by 1/12th of a turn" src="images/running_horse.gif" style="width: 300px; height: 301px;"><p>So, there are 12 frames drawn in the disk, spaced at equal angles of 30°. If the disk rotates by 30° each time we get a glimpse, we will effectively see the next frame in place of the current one. Do this many times and you get an animation.</p>
-<p>However, note that the disk has 13 slits! They are spaced not every 30°, but every 27,7°! What do you think will happen?</p>
-<p>With your mind, turn the disk by just 1/13th of a turn. Open your eyes, take a brief look, and close them again. Repeat. It is the slits that will remain stationary this time! But what about the horses? Where is the next frame? Well, because we just turned 27,7° instead of 30°, the next horse frame didn't arrive to the same position of the previous frame. It is slightly off, and in this case, slightly advanced. The horse is running faster!
-Using a number of frames that is different than the angle of rotation of the disk results in <em>tangential</em> movement. In cardboard disks like this, the angle of rotation is given by the separation between the slits. It equals 360° divided by the number of slits. The number of frames is the number of horses, in this case.</p>
-<img alt="Disk animated by 1/13th of a turn (horse runs faster!)" class="align-center" src="images/horse_13_frames.gif" style="width: 300px; height: 301px;"></section><section id="about-this-series"><h2>About this series</h2>
-<p>This is the first article about the phenakistiscope. In this short series, I describe some of the ideas used to animate the disks. At the end I will include a post about a circuit that animates the disks using LEDs and a servomotor.</p>
-<p>The image used above can be found in <a class="reference external" href="http://loc.gov/pictures/resource/ppmsca.05947/">the library of congress of the United States</a> and it is in the public domain.</p>
-</section>
+<a class="button is-link" href="posts/phenakistiscope/" style="height:28px"> Read more <span class="icon is-small"> <i class="fa fa-angle-double-right"></i></span></a>
 </div>
       </div>
     </article><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
@@ -245,7 +118,7 @@ Using a number of frames that is different than the angle of rotation of the dis
         </script>
 </div>
 </section><section class="section"><div class="container has-text-centered">
-            <p>Contents © 2021         <a href="mailto:julio.fraire@gmail.com">Julio Fraire</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
+            <p>Contents © 2025         <a href="mailto:julio.fraire@gmail.com">Julio Fraire</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         </p>
             
   </div>
 </section><script src="assets/js/all-nocdn.js"></script><script>
