@@ -72,7 +72,7 @@
 Sounds easy, like a good chance to learn some image processing with the <a class="reference external" href="https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html">OpenCV</a> library.</p>
 <p>This post is about my exploration towards building a script to align and stack some astronomical photographies.</p>
 <!-- TEASER_END -->
-<p>I finally acquired a small telescope, and I managed to take a few tenths of pictures of the Moon and the globular cluster M13.</p>
+<p>I finally acquired a small telescope, and I managed to take a few tenths of pictures of the Moon, a couple of galaxies, and the globular cluster M13.</p>
 <img alt="The image shows unprocessed pictures of the Moon and M13. Both are blurry and M13 is quite faint." src="../../images/moon_and_m13_before_processing.jpg" style="height: 250px;"><p>I am a newbie when it comes to taking pictures with the telescope, so they are what they are. Moreover, I struggled with the focus adjustment and the
 first ones I took of the Moon are way too blurry to brag about. But I did get the bite of curiosity for the processing of astrophotographies.</p>
 <p>These are the steps it takes to create a beautiful image:</p>
@@ -120,8 +120,8 @@ The following picture shows the ORB descriptors found after thresholding and sli
 </section><section id="stacking"><h3>Stacking</h3>
 <p>After alignment, the <em>stacking</em> phase begins. My program is straightforward: It sums all the images together and divides the result by the number of images. <em>Voilà</em>, it's the average.
 It is quite simple, and it works.</p>
-<p>As an average, the expected image should have much less noise, thought it might be blurry. This example shows the result for the globular cluster M13 after alignment and stacking:</p>
-<img alt="One of the frames to the left, for comparison with the stacked image to the right." src="../../images/M13_base_vs_stacked.JPG" style="width: 378px; height: 168px;"><p>The image above shows one of the unprocessed images to the left, and the resulting stacked picture to the right. Notice the noisy sky. In contrast, the Moon images show
+<p>As an average, the expected image should have much less noise, thought it might be blurry. This example shows the result for the globular cluster M82 after alignment and stacking:</p>
+<img alt="One of the original frames of M82 to the left, for comparison with the stacked image to the right." src="../../images/M82_base_vs_stacked.jpg" style="width: 400px; height: 227px;"><p>The image above shows one of the unprocessed images to the left, and the resulting stacked picture to the right. Notice the noisy sky. In contrast, the Moon images show
 a smaller difference. The variation in brightness results from using images with different exposure times to build the stacked image.</p>
 <img alt="Base image to the left, stacked to the right." src="../../images/luna_base_vs_stacked.JPG" style="width: 450px; height: 250px;"></section><section id="wavelet-decomposition"><h3>Wavelet decomposition</h3>
 <p>The most impressive enhancement comes from the last step, wavelet deconvolution, used to bring up the details in the pictures. I used the GIMP for this part, and the process

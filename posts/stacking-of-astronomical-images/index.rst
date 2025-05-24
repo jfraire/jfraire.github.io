@@ -14,7 +14,7 @@ This post is about my exploration towards building a script to align and stack s
 
 .. TEASER_END
 
-I finally acquired a small telescope, and I managed to take a few tenths of pictures of the Moon and the globular cluster M13.
+I finally acquired a small telescope, and I managed to take a few tenths of pictures of the Moon, a couple of galaxies, and the globular cluster M13.
 
 .. image:: /images/moon_and_m13_before_processing.jpg 
     :height: 250
@@ -100,12 +100,12 @@ Stacking
 After alignment, the *stacking* phase begins. My program is straightforward: It sums all the images together and divides the result by the number of images. *Voilà*, it's the average.
 It is quite simple, and it works.
 
-As an average, the expected image should have much less noise, thought it might be blurry. This example shows the result for the globular cluster M13 after alignment and stacking:
+As an average, the expected image should have much less noise, thought it might be blurry. This example shows the result for the globular cluster M82 after alignment and stacking:
 
-.. image:: /images/M13_base_vs_stacked.JPG
-    :width: 378px
-    :height: 168px
-    :alt: One of the frames to the left, for comparison with the stacked image to the right.
+.. image:: /images/M82_base_vs_stacked.jpg
+    :width: 400
+    :height: 227
+    :alt: One of the original frames of M82 to the left, for comparison with the stacked image to the right.
 
 The image above shows one of the unprocessed images to the left, and the resulting stacked picture to the right. Notice the noisy sky. In contrast, the Moon images show
 a smaller difference. The variation in brightness results from using images with different exposure times to build the stacked image.
