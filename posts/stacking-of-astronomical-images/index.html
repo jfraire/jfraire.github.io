@@ -123,7 +123,8 @@ It is quite simple, and it works.</p>
 <p>As an average, the expected image should have much less noise, thought it might be blurry. This example shows the result for the globular cluster M82 after alignment and stacking:</p>
 <img alt="One of the original frames of M82 to the left, for comparison with the stacked image to the right." src="../../images/M82_base_vs_stacked.jpg" style="width: 400px; height: 227px;"><p>The image above shows one of the unprocessed images to the left, and the resulting stacked picture to the right. Notice the noisy sky. In contrast, the Moon images show
 a smaller difference. The variation in brightness results from using images with different exposure times to build the stacked image.</p>
-<img alt="Base image to the left, stacked to the right." src="../../images/luna_base_vs_stacked.JPG" style="width: 450px; height: 250px;"></section><section id="wavelet-decomposition"><h3>Wavelet decomposition</h3>
+<img alt="Base image to the left, stacked to the right." src="../../images/luna_base_vs_stacked.JPG" style="width: 450px; height: 250px;"><p>The Python program I wrote will take you up to this point. You can see it at the bottom of this post.</p>
+</section><section id="wavelet-decomposition"><h3>Wavelet decomposition</h3>
 <p>The most impressive enhancement comes from the last step, wavelet deconvolution, used to bring up the details in the pictures. I used the GIMP for this part, and the process
 is quite simple. I applied the <em>wavelet decompose</em> filter with 5 scales and adjusted the original image so that only the top three scales are visible on the result.
 In the example below, the filter is applied above the red line:</p>
@@ -132,7 +133,8 @@ In the example below, the filter is applied above the red line:</p>
 <p>The new AI technologies are very helpful for this kind of explorations. I asked questions about the general outlines, about the algorithms, about their parameters,
 and the results were stunning. I obtained working code snippets and improvements for my Python programs. I even improved my writing style with it.</p>
 <p>I used <a class="reference external" href="https://mistral.ai">Mistral</a> for this hobby project.</p>
-<img alt="Stacked image of M13 enhanced by wavelet decomposition and levels adjustment." src="../../images/m13_stacked.jpg" style="width: 640px; height: 427px;"></section></section>
+<img alt="Stacked image of M13 enhanced by wavelet decomposition and levels adjustment." src="../../images/m13_stacked.jpg" style="width: 640px; height: 427px;"></section><section id="python-program"><h3>Python program</h3>
+<script src="https://gist.github.com/jfraire/bb9dae4d14d9b379d76f4e582cd7e838.js"></script></section></section>
 </div>
     </div>
 </section><section class="section"><div class="container has-text-centered">

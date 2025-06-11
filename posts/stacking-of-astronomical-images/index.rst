@@ -115,6 +115,8 @@ a smaller difference. The variation in brightness results from using images with
     :height: 250px
     :alt: Base image to the left, stacked to the right.
 
+The Python program I wrote will take you up to this point. You can see it at the bottom of this post.
+
 Wavelet decomposition
 ---------------------
 
@@ -152,4 +154,11 @@ I used `Mistral <https://mistral.ai>`_ for this hobby project.
     :width: 640px
     :height: 427px
     :alt: Stacked image of M13 enhanced by wavelet decomposition and levels adjustment.
+
+Python program
+--------------
+
+.. raw:: html
+
+    <script src="https://gist.github.com/jfraire/bb9dae4d14d9b379d76f4e582cd7e838.js"></script>
 
